@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const Project = require('./model/Links');
 const BestCoupon = require('./model/BestCoupon');
+const Blog = require('./model/Blog');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
@@ -49,15 +50,44 @@ app.get('/best', async (req, res) => {
     }
 });
 
+// Get all Blogs
+app.get('/blog', async (req, res) => {
+    try {
+        const blogs = await Blog.find();
+        res.json(blogs);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'something went wrong' });
+    }
+});
+
 // Best coupon register
 
-// Register route
 app.post('/best', async (req, res) => {
     const { title, affiliate } = req.body;
     try {
         await BestCoupon.create({
             title,
             affiliate,
+        });
+        res.status(200).json({ message: 'SUCCESSFULLY DATA ADDED' });
+    } catch (error) {
+        console.log(error);
+        res.status(400).json(error);
+    }
+});
+
+app.post('/blog', async (req, res) => {
+    const { title, description, googleLink, facebookLink, twitterLink, date } =
+        req.body;
+    try {
+        await Blog.create({
+            title,
+            description,
+            googleLink,
+            facebookLink,
+            twitterLink,
+            date,
         });
         res.status(200).json({ message: 'SUCCESSFULLY DATA ADDED' });
     } catch (error) {
