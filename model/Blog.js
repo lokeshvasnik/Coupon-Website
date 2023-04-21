@@ -5,6 +5,7 @@ const Blog = new mongoose.Schema({
     description: { type: String, required: true },
     googleLink: { type: String },
     facebookLink: { type: String },
+    imageLink: { type: String, required: true },
     twitterLink: { type: String },
     date: { type: String, required: true },
 });

@@ -78,8 +78,15 @@ app.post('/best', async (req, res) => {
 });
 
 app.post('/blog', async (req, res) => {
-    const { title, description, googleLink, facebookLink, twitterLink, date } =
-        req.body;
+    const {
+        title,
+        description,
+        googleLink,
+        facebookLink,
+        twitterLink,
+        date,
+        imageLink,
+    } = req.body;
     try {
         await Blog.create({
             title,
@@ -87,6 +94,7 @@ app.post('/blog', async (req, res) => {
             googleLink,
             facebookLink,
             twitterLink,
+            imageLink,
             date,
         });
         res.status(200).json({ message: 'SUCCESSFULLY DATA ADDED' });
@@ -131,6 +139,17 @@ app.get('/api/:id', async (req, res) => {
 
 // Find Project by id
 app.get('/best/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const bestCoupons = await BestCoupon.findById(id);
+        res.json(bestCoupons);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'something went wrong' });
+    }
+});
+
+app.get('/blog/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const bestCoupons = await BestCoupon.findById(id);
