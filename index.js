@@ -193,6 +193,15 @@ app.delete('/best/:id', async (req, res) => {
     }
 });
 
+app.delete('/blog/:id', async (req, res) => {
+    try {
+        const result = await Blog.findByIdAndDelete(req.params.id);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+});
+
 // Search
 
 app.get('/search/:key', async (req, res) => {
