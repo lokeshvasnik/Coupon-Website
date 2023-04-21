@@ -152,8 +152,8 @@ app.get('/best/:id', async (req, res) => {
 app.get('/blog/:id', async (req, res) => {
     try {
         const id = req.params.id;
-        const bestCoupons = await BestCoupon.findById(id);
-        res.json(bestCoupons);
+        const blogs = await Blog.findById(id);
+        res.json(blogs);
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'something went wrong' });
